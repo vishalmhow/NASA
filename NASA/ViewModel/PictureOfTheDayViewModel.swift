@@ -15,7 +15,7 @@ class PictureOfTheDayViewModel {
     let pictureRepository: PictureRepository = PictureRepositoryImpl()
     private var activityIndicator: UIActivityIndicatorView!
     
-    var lastDownloadedPictureOfTheDay: PictureOfTheDay!
+    var lastDownloadedPictureOfTheDay: PictureOfTheDay?
     var downloadImage: UIImage?
     
     private var sendPicture: [String: PictureOfTheDay?]?
@@ -38,10 +38,13 @@ class PictureOfTheDayViewModel {
         }
     }
     func markAsFavourite(completion: @escaping(serviceHandler)) {
-        self.pictureRepository.create(picture: self.lastDownloadedPictureOfTheDay) { status in
-            if status {
-                completion(true, nil)
-            }
+        if let lastDownloaded = self.lastDownloadedPictureOfTheDay {
+            self.pictureRepository.create(picture: lastDownloaded) { status in
+                if status {
+                    completion(true, nil)
+                }
+        }
+
         }
     }
     private func setupImage(_ picture: PictureOfTheDay, completion: @escaping(serviceHandler)) {
@@ -53,7 +56,9 @@ class PictureOfTheDayViewModel {
     func getButtonStates(completion: @escaping (Bool, Bool) -> Void) {
         self.pictureRepository.getAll { favList in
             // self.favoritesArray = favList
-            completion(favList.count > 0, !favList.contains(where: {$0.imageUrl == self.lastDownloadedPictureOfTheDay.url}))
+            if let url = self.lastDownloadedPictureOfTheDay?.url {
+                completion(favList.count > 0, !favList.contains(where: {$0.imageUrl == url}))
+            }
         }
     }
     
