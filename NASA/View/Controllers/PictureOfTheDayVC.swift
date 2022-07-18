@@ -36,11 +36,13 @@ class PictureOfTheDayVC: UIViewController {
         } else {
             self.viewModel.downloadJSONfromServer(viewController: self,date: date) { (_, _) in
                 DispatchQueue.main.async {
-                    self.dateLabel.text = self.viewModel.lastDownloadedPictureOfTheDay.date
-                    self.titleTextView.text = self.viewModel.lastDownloadedPictureOfTheDay.title
-                    self.explanationTextView.text = self.viewModel.lastDownloadedPictureOfTheDay.explanation
-                    self.pictureImageView.image = self.viewModel.downloadImage
-                    self.updateButtonsState()
+                    if let lastDownloadedPictureOfTheDay = self.viewModel.lastDownloadedPictureOfTheDay{
+                        self.dateLabel.text = lastDownloadedPictureOfTheDay.date
+                        self.titleTextView.text = lastDownloadedPictureOfTheDay.title
+                        self.explanationTextView.text = lastDownloadedPictureOfTheDay.explanation
+                        self.pictureImageView.image = self.viewModel.downloadImage
+                        self.updateButtonsState()
+                    }
                 }
             }
         }
