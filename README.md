@@ -32,4 +32,4 @@ App is written in Xcode 13.2.1 & Swift 5, followed MVVM.
 https://www.linkedin.com/in/vishal-sharma-a77ab030/ 
  
 
-<img src="https://im3.ezgif.com/tmp/ezgif-3-7fc516e339.gif" width="414" height="896" />
+<img src="https://github.com/vishalmhow/GIF/blob/main/GIF.gif" width="414" height="896" />
